@@ -1,0 +1,35 @@
+import { Injectable } from '@angular/core';
+import { Constants } from '../constants/config.prod';
+import { HttpClient } from '@angular/common/http';
+import { UserSubmittedData } from '../constants/types';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ContentRetrieverService {
+
+  private readonly redditApiSubmittedUrl: string = '/user/{{username}}/submitted?limit=100&sort=new';
+
+  constructor(private http: HttpClient) { };
+
+  getUserSubmittedData(username: string): Observable<UserSubmittedData> {
+    let queryParams = {
+      limit: 100,
+      sort: 'new'
+    }
+    var contentUrl = Constants.redditApiBaseUrl + this.redditApiSubmittedUrl.replace('{{username}}', username);
+    return this.http.get<UserSubmittedData>(contentUrl, { params: queryParams });
+  }
+
+
+  popularRedditor(user: string): void {
+    const functionUrl = 'https://reddit-up-api.azurewebsites.net/api/visited-users?code=3mYTjiLAPqgOEpX5I0f7tbQ6hjEW4w1VX1zSi2K0rn0lAzFuvpPpSA==';
+    const queryParams = {
+      username: user
+    };
+    let req = this.http.get(functionUrl, { params: queryParams });
+    req.toPromise();
+  }
+
+}

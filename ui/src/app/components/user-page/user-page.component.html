@@ -1,0 +1,6 @@
+<div *ngIf="retrievingData">
+<app-spinner></app-spinner>
+</div>
+<gallery fluid [items]="galleryList" [counter]="false" *ngIf="!retrievingData" style="height: 93vh"></gallery>
+
+

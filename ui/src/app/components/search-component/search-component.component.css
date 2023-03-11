@@ -1,0 +1,14 @@
+input {
+    margin-left: 1em;
+    background-color: gray;
+    border-radius: 4px;
+    padding: 0 16px;
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    position: relative;
+}
+
+.container {
+    display: flex;
+}

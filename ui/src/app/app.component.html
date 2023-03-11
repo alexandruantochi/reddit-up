@@ -1,0 +1,30 @@
+<title>reddit-up</title>
+
+<body class="mat-app-background">
+  <p>
+    <mat-toolbar color="primary" style="height: 5vh">
+      <a href="/" mat-raised-button>reddit-up</a>
+      <app-search-component>
+      </app-search-component>
+    </mat-toolbar>
+  </p>
+  <div *ngIf="this.router.url === '/'">
+    <h1>
+      Latest updates
+    </h1>
+    <ul>
+      <li>RedGIFs support</li>
+      <li>Feedback?
+        <ul>
+          <li>
+            <a href="https://www.reddit.com/r/reddit_up/" mat-raised-button>/r/reddit_up</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <section>
+    <router-outlet></router-outlet>
+  </section>
+
+</body>
