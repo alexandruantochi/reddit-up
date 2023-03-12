@@ -10,7 +10,7 @@ on:
 env:
   APP_LOCATION: "/ui" 
   # API_LOCATION: "api" 
-  APP_ARTIFACT_LOCATION: "ui/build" 
+  APP_ARTIFACT_LOCATION: "/dist" 
   AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }} 
 
 permissions:
