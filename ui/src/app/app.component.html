@@ -8,20 +8,16 @@
       </app-search-component>
     </mat-toolbar>
   </p>
-  <div *ngIf="this.router.url === '/'">
+  <div *ngIf="this.router.url === '/'" style="margin: 5em">
     <h1>
       Latest updates
     </h1>
     <ul>
+      <li>Imgur mp4 support</li>
       <li>RedGIFs support</li>
-      <li>Feedback?
-        <ul>
-          <li>
-            <a href="https://www.reddit.com/r/reddit_up/" mat-raised-button>/r/reddit_up</a>
-          </li>
-        </ul>
-      </li>
     </ul>
+    <p>Do you have any feedback or want to keep up with any updates? Visit <a href="https://www.reddit.com/r/reddit_up/" mat-flat-button target="_blank" color="primary">/r/reddit_up</a></p>
+
   </div>
   <section>
     <router-outlet></router-outlet>
