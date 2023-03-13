@@ -6,17 +6,21 @@ import { AppComponent } from './app.component';
 import { ContentRetrieverService } from './services/content-retriever.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatGridListModule} from '@angular/material/grid-list';
-import { GalleryModule } from  'ng-gallery';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { GalleryModule } from 'ng-gallery';
 
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SearchComponentComponent } from './components/search-component/search-component.component'; 
+import { SearchComponentComponent } from './components/search-component/search-component.component';
+
+import { UrlSerializer } from '@angular/router';
+import { LowerCaseUrlSerializer } from './providers/LowerCaseUrlSerializer';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +42,11 @@ import { SearchComponentComponent } from './components/search-component/search-c
     MatGridListModule,
     GalleryModule
   ],
-  providers: [ContentRetrieverService],
+  providers: [ContentRetrieverService,
+    {
+      provide: UrlSerializer,
+      useClass: LowerCaseUrlSerializer
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
