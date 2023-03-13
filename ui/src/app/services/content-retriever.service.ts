@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Constants } from '../constants/config.prod';
 import { HttpClient } from '@angular/common/http';
-import { UserSubmittedData } from '../constants/types';
+import { UserAboutData, UserSubmittedData } from '../constants/types';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class ContentRetrieverService {
 
   private readonly redditApiSubmittedUrl: string = '/user/{{username}}/submitted?limit=100&sort=new';
+  private readonly redditApiAboutUrl: string = '/user/{{username}}/about';
 
   constructor(private http: HttpClient) { };
 
@@ -20,6 +21,11 @@ export class ContentRetrieverService {
     }
     var contentUrl = Constants.redditApiBaseUrl + this.redditApiSubmittedUrl.replace('{{username}}', username);
     return this.http.get<UserSubmittedData>(contentUrl, { params: queryParams });
+  }
+
+  getUserAboutDetails(username: string): Observable<UserAboutData> {
+    var contentUrl = Constants.redditApiBaseUrl + this.redditApiAboutUrl.replace('{{username}}', username);
+    return this.http.get<UserAboutData>(contentUrl);
   }
 
 

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContentRetrieverService } from 'src/app/services/content-retriever.service';
-import { UserPost, UserSubmittedData } from 'src/app/constants/types';
+import { UserAboutData, UserPost, UserSubmittedData } from 'src/app/constants/types';
 import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class UserPageComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private contentRetriever: ContentRetrieverService
+    private contentRetriever: ContentRetrieverService,
+    private titleService: Title
   ) {
     this.retrievingData = true;
   };
@@ -44,6 +46,19 @@ export class UserPageComponent {
         }
       }
       );
+
+      let userAboutPromise = this.contentRetriever.getUserAboutDetails(currentUsername);
+      userAboutPromise.subscribe({
+        next: (data: UserAboutData) => {
+          this.retrievingData = false;
+          this.titleService.setTitle(`${data.data.subreddit.title} (${data.data.subreddit.display_name_prefixed}) - reddit-up`);
+        },
+        error: (e: Error) => {
+          this.retrievingData = false;
+          console.log(`Could not find username "${currentUsername}"`);
+        }
+      });
+      
     });
   }
 
