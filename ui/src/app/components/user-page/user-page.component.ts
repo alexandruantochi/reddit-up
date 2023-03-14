@@ -28,7 +28,7 @@ export class UserPageComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      let currentUsername = (params.get('username') || "").replaceAll(' ', '');
+      let currentUsername = (params.get('username') || "").replaceAll(' ', '').toLowerCase();
       if (currentUsername === "") {
         return;
       }
