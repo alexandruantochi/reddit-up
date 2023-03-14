@@ -12,6 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { GalleryModule } from 'ng-gallery';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
@@ -40,7 +41,8 @@ import { LowerCaseUrlSerializer } from './providers/LowerCaseUrlSerializer';
     MatToolbarModule,
     MatButtonModule,
     MatGridListModule,
-    GalleryModule
+    GalleryModule,
+    MatSnackBarModule
   ],
   providers: [ContentRetrieverService,
     {

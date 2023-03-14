@@ -4,6 +4,8 @@ import { ContentRetrieverService } from 'src/app/services/content-retriever.serv
 import { UserAboutData, UserPost, UserSubmittedData } from 'src/app/constants/types';
 import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
 import { Title } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from "@angular/common/http";
 
 
 @Component({
@@ -21,6 +23,7 @@ export class UserPageComponent {
   constructor(
     private route: ActivatedRoute,
     private contentRetriever: ContentRetrieverService,
+    private _snackBar: MatSnackBar,
     private titleService: Title
   ) {
     this.retrievingData = true;
@@ -40,9 +43,23 @@ export class UserPageComponent {
           this.retrievingData = false;
           this.displayImages(data.data.children)
         },
-        error: (e: Error) => {
+        error: (e: HttpErrorResponse) => {
           this.retrievingData = false;
-          console.log(`Could not find username "${currentUsername}"`);
+          switch (e.status) {
+            case 404:
+              () => {
+                this._snackBar.open(`Could not find username "${currentUsername}"`,"", {
+                  duration: 3000
+                });
+                console.log(`Could not find username "${currentUsername}"`);
+              }
+              break;
+            default:
+              this._snackBar.open(`An unexpected error occurred.`,"", {
+                duration: 3000
+              });
+
+          }
         }
       }
       );
@@ -58,7 +75,7 @@ export class UserPageComponent {
           console.log(`Could not find username "${currentUsername}"`);
         }
       });
-      
+
     });
   }
 
