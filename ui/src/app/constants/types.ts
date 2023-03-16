@@ -15,10 +15,11 @@ export interface UserSubmittedData {
     data: {
         after: string | null;
         before: string | null;
-        children: [{
+        children: Array<{
             kind: PostKind;
             data: UserPost;
-        }]
+        }>
+        dist: number;
     }
 }
 
