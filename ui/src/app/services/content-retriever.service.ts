@@ -38,21 +38,4 @@ export class ContentRetrieverService {
     req.toPromise();
   }
 
-  loadImages(url: string): Observable<string> {
-    return new Observable((subscriber) => {
-      fetch(url)
-        .then(res => res.blob())
-        .then(blob => {
-          let fr = new FileReader();
-          fr.readAsDataURL(blob);
-          fr.onloadend = function () {
-            if(typeof fr.result === "string") {
-              subscriber.next(fr.result);
-              subscriber.complete();
-            }
-          }
-        });
-    });
-  }
-
 }
