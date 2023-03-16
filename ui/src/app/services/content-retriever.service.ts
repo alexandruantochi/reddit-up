@@ -12,6 +12,8 @@ export class ContentRetrieverService {
   private readonly redditApiSubmittedUrl: string = '/user/{{username}}/submitted?limit=100&sort=new';
   private readonly redditApiAboutUrl: string = '/user/{{username}}/about';
 
+  private readonly backendUrl: string = "http://localhost:7071";
+
   constructor(private http: HttpClient) { };
 
   getUserSubmittedData(username: string): Observable<UserSubmittedData> {
@@ -30,12 +32,17 @@ export class ContentRetrieverService {
 
 
   popularRedditor(user: string): void {
-    const functionUrl = 'https://reddit-up-api.azurewebsites.net/api/visited-users?code=3mYTjiLAPqgOEpX5I0f7tbQ6hjEW4w1VX1zSi2K0rn0lAzFuvpPpSA==';
+    const functionUrl = this.backendUrl + '/api/visited-users?code=3mYTjiLAPqgOEpX5I0f7tbQ6hjEW4w1VX1zSi2K0rn0lAzFuvpPpSA==';
     const queryParams = {
       username: user
     };
     let req = this.http.get(functionUrl, { params: queryParams });
     req.toPromise();
+  }
+
+  duplicateContentUrls(urls: string[]): Observable<string[]> {
+    const functionUrl = this.backendUrl + '/api/dupe-checker?code=3mYTjiLAPqgOEpX5I0f7tbQ6hjEW4w1VX1zSi2K0rn0lAzFuvpPpSA==';
+    return this.http.post<string[]>(functionUrl, { urls });
   }
 
 }

@@ -1,13 +1,10 @@
 <title>reddit-up</title>
 
 <body class="mat-app-background">
-  <p>
-    <mat-toolbar color="primary" style="height: 5vh">
-      <a href="/" mat-raised-button>reddit-up</a>
-      <app-search-component>
-      </app-search-component>
-    </mat-toolbar>
-  </p>
+    <nav>
+      <h1><a [routerLink]="['/']">Reddit<b style="color: #FF5700;font-weight: 700">Up</b></a></h1>
+      <app-search-component></app-search-component>
+    </nav>
   <div *ngIf="this.router.url === '/'" style="margin: 5em">
     <h1>
       Major updates
@@ -22,7 +19,7 @@
 
   </div>
   <section>
-    <router-outlet></router-outlet>
+    <router-outlet ></router-outlet>
   </section>
 
 </body>
