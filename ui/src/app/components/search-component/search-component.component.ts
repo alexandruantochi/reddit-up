@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ViewChild, ElementRef } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {FormControl} from "@angular/forms";
+import {filter, map, Observable, of, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-search-component',
@@ -9,12 +10,40 @@ import { ViewChild, ElementRef } from '@angular/core';
 })
 export class SearchComponentComponent {
 
-  @ViewChild('username', { static: true }) input: ElementRef | undefined;
+  username: string = "";
+  public currentUsername: Observable<string | null>;
 
-  constructor(private router: Router) { }
+    constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+      this.currentUsername = this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => this.route.root.firstChild),
+        switchMap(firstChild => {
+          if(firstChild) {
+            return firstChild.paramMap.pipe(map(paramMap => paramMap.get("username")))
+          } else {
+            return of(null)
+          }
+        })
+      );
+
+      this.currentUsername.subscribe((newUsername) => {
+        if (newUsername !== null){
+          this.username = newUsername;
+        } else {
+          this.username = "";
+        }
+      })
+
+    }
 
 
-  onKeyDownEvent(event: any) {
-    this.router.navigate([`/user/${this.input?.nativeElement.value}`])
+
+  openUserPage() {
+        this.router.navigate([`/user/${this.username}`]);
   }
+
+
 }

@@ -1,0 +1,29 @@
+h1 {
+  align-self: center;
+  margin: 0;
+  font-family: 'Roboto';
+  font-weight: 500;
+}
+
+h1 a {
+  text-decoration: none;
+  color: white;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5em 1em;
+}
+
+app-search-component {
+  margin: auto;
+}
+
+@media screen and (max-width: 989px) {
+  app-search-component {
+    margin: 0;
+    margin-left: auto;
+  }
+}
