@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContentRetrieverService } from 'src/app/services/content-retriever.service';
-import { UserAboutData, UserPost, UserSubmittedData } from 'src/app/constants/types';
+import { UserAboutData, UserSubmittedData } from 'src/app/constants/types';
 import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -41,40 +41,38 @@ export class UserPageComponent {
       userDataPromise.subscribe({
         next: (data: UserSubmittedData) => {
           this.retrievingData = false;
-          this.displayImages(data.data.children)
+
+          if (data.data.children.length === 0) {
+            this._snackBar.open(`Could not find username "${currentUsername}"`, "", {
+              duration: 3000
+            });
+            console.log(`Could not find username "${currentUsername}"`);
+          }
+          this.displayImages(data.data.children);
+
+
+          let userAboutPromise = this.contentRetriever.getUserAboutDetails(currentUsername);
+          userAboutPromise.subscribe({
+            next: (data: UserAboutData) => {
+              this.titleService.setTitle(`${data.data.subreddit.title} (${data.data.subreddit.display_name_prefixed}) - reddit-up`);
+            }
+          });
         },
         error: (e: HttpErrorResponse) => {
           this.retrievingData = false;
-          switch (e.status) {
-            case 404:
-              () => {
-                this._snackBar.open(`Could not find username "${currentUsername}"`,"", {
-                  duration: 3000
-                });
-                console.log(`Could not find username "${currentUsername}"`);
-              }
-              break;
-            default:
-              this._snackBar.open(`An unexpected error occurred.`,"", {
+           if (e.status === 777) {
+              this._snackBar.open(`Sorry, Reddit is dead. ☠️`, "", {
                 duration: 3000
               });
-
+          } else {
+            this._snackBar.open(`An unexpected error occurred.`, "", {
+              duration: 3000
+            });
           }
         }
       }
       );
 
-      let userAboutPromise = this.contentRetriever.getUserAboutDetails(currentUsername);
-      userAboutPromise.subscribe({
-        next: (data: UserAboutData) => {
-          this.retrievingData = false;
-          this.titleService.setTitle(`${data.data.subreddit.title} (${data.data.subreddit.display_name_prefixed}) - reddit-up`);
-        },
-        error: (e: Error) => {
-          this.retrievingData = false;
-          console.log(`Could not find username "${currentUsername}"`);
-        }
-      });
 
     });
   }

@@ -11,7 +11,6 @@ export class ContentRetrieverService {
 
   private readonly redditApiSubmittedUrl: string = '/user/{{username}}/submitted?limit=100&sort=new';
   private readonly redditApiAboutUrl: string = '/user/{{username}}/about';
-
   private readonly backendUrl: string = "https://reddit-up-api.azurewebsites.net";
 
   constructor(private http: HttpClient) { };
