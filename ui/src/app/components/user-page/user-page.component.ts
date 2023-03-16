@@ -84,7 +84,7 @@ export class UserPageComponent {
     let images: GalleryItem[] = [];
     let alreadyPostedImage = new Set();
     console.log(userSubmission)
-    this.contentRetriever.duplicateContentUrls(userSubmission.map((entry: { data: { thumbnail: any; }; }) => entry.data.thumbnail)).toPromise().then((urls) => {
+    this.contentRetriever.duplicateContentUrls(userSubmission.map((entry: { data: { thumbnail: any; }; }) => entry.data.thumbnail)).subscribe((urls) => {
       if(urls) {
       userSubmission = userSubmission.filter((entry: any) => {
         return !urls.includes(entry.data.thumbnail)});
