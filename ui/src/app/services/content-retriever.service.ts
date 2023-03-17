@@ -14,7 +14,6 @@ export class ContentRetrieverService {
   private readonly backendUrl: string = "https://reddit-up-api.azurewebsites.net";
 
   constructor(private http: HttpClient) {
-    this.getUserAboutDetails("nosdasdatreal").subscribe(u => console.log(u), r => console.log(r));
   };
 
   getUserSubmittedData(username: string): Observable<UserSubmittedData> {
