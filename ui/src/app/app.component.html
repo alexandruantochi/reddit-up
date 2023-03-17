@@ -1,23 +1,10 @@
 <title>reddit-up</title>
 
-<body class="mat-app-background">
+<body>
     <nav>
       <h1><a [routerLink]="['/']"><b style="color: #FF5700;font-weight: 700">Up </b><span>for</span> Reddit</a></h1>
       <app-search-component></app-search-component>
     </nav>
-  <div *ngIf="this.router.url === '/'" style="margin: 5em">
-    <h1>
-      Major updates
-    </h1>
-    <ul>
-      <li>All duplicate images are automatically removed</li>
-      <li>Video + Redgif support</li>
-      <li>UI improvements</li>
-      <li>Full update log <a href="/assets/latest-updates.txt" style="color: white">here</a></li>
-    </ul>
-    <p>Do you have any feedback or want to keep up with any updates? Visit <a href="https://www.reddit.com/r/reddit_up/" mat-flat-button target="_blank" color="primary">/r/reddit_up</a></p>
-
-  </div>
   <section>
     <router-outlet ></router-outlet>
   </section>

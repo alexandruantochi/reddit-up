@@ -3,6 +3,8 @@
 
 html, body {
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
+  background-color: #202020;
+  color: white;
 }
 body { margin: 0; font-family: "Helvetica Neue", sans-serif;  }
