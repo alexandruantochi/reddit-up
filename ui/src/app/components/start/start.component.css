@@ -1,0 +1,53 @@
+.userCardWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.userCard {
+  width: 400px;
+  height: 300px;
+  background-color: #303030;
+  overflow: hidden;
+  border-radius: 5px;
+  position: relative;
+}
+
+.userCardHeader {
+  width: 400px;
+  height: 120px;
+  background-color: #FF5700;
+}
+
+.userCardHeader img {
+  width: 100%;
+}
+
+.userCardIcon {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  border-radius: 5px;
+  padding: 15px;
+  top: 70px;
+  left: 10px
+}
+
+.userCardIcon img {
+  width: 100%;
+}
+
+.userCard .names {
+  padding-top: 0.5em;
+  padding-left: 140px;
+  position: relative;
+}
+
+.userCard .names h2, .userCard .names h3 {
+  margin: 0px;
+  padding: 0px;
+}
+
+.userCard .names h3  {
+  color: #9d9d9d;
+}

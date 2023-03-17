@@ -1,0 +1,35 @@
+<div style="margin: 5em">
+  <h1>
+    Major updates
+  </h1>
+  <ul>
+    <li>Imgur mp4 support</li>
+    <li>RedGIFs support</li>
+    <li>Removed duplicate images based on same URLs</li>
+    <li>Full update log <a href="/assets/latest-updates.txt" style="color: white">here</a></li>
+  </ul>
+  <p>Do you have any feedback or want to keep up with any updates? Visit <a href="https://www.reddit.com/r/reddit_up/" mat-flat-button target="_blank" style="background-color: white; color: black;">/r/reddit_up</a></p>
+
+
+  <div>
+    <h1>View History</h1>
+    <div class="userCardWrapper">
+      <div class="userCard" *ngFor="let user of viewHistory">
+        <div class="userCardHeader">
+          <img [src]="user.data.subreddit.banner_img"/>
+        </div>
+        <div class="userCardIcon">
+          <img [src]="user.data.subreddit.icon_img"/>
+        </div>
+        <div class="names">
+          <h2>{{ user.data.subreddit.title }}</h2>
+          <h3>{{ user.data.subreddit.display_name_prefixed }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
