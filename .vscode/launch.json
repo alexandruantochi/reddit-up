@@ -28,7 +28,7 @@
   ],
   "compounds": [
     {
-      "name": "UI+API",
+      "name": "UI and API",
       "configurations": [
         "UI",
         "API"
