@@ -39,7 +39,7 @@ export class ContentRetrieverService {
     req.toPromise();
   }
 
-  duplicateContentUrls(urls: string[]): Observable<string[]> {
+  getUrlsWithTheSameEtag(urls: string[]): Observable<string[]> {
     const functionUrl = this.backendUrl + '/api/dupe-checker?code=3mYTjiLAPqgOEpX5I0f7tbQ6hjEW4w1VX1zSi2K0rn0lAzFuvpPpSA==';
     return this.http.post<string[]>(functionUrl, { urls });
   }
