@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContentRetrieverService } from 'src/app/services/content-retriever.service';
-import { UserAboutData, UserSubmittedData } from 'src/app/constants/types';
+import { UserAboutData, UserSubmittedData, UserPost } from 'src/app/constants/types';
 import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -77,30 +77,56 @@ export class UserPageComponent {
     });
   }
 
-  displayImages(userSubmission: any): void {
+
+  removeSameUrlsFromUserData(rawUserData: UserPost[]): UserPost[] {
+    let alreadySeenUrl = new Set();
+    return rawUserData.filter(post => {
+      if (alreadySeenUrl.has(post.data.url)) {
+        return false;
+      } else {
+        alreadySeenUrl.add(post.data.url);
+        return true;
+      }
+    })
+  }
+
+  displayImages(rawUserData: UserPost[]): void {
+    let filteredUserData = this.removeSameUrlsFromUserData(rawUserData);
+    const userSubmittedUrlsToCheck = filteredUserData.map(x => x.data.url).filter( x => x.startsWith('https://i.redd.it'));
+    this.contentRetriever.getUrlsWithTheSameEtag(userSubmittedUrlsToCheck).subscribe({
+      next: (sameImageUrls) => {
+        let sameImageUrlsSet = new Set(sameImageUrls);
+        console.log(sameImageUrls);
+        filteredUserData = filteredUserData.filter(x => {
+          return !sameImageUrlsSet.has(x.data.url);
+        });
+      },
+      error: (err) => {
+        console.log(err.message);
+      }
+    }).add(() => this.addImagesToGallery(filteredUserData));
+  }
+
+  addImagesToGallery(filteredUserData: UserPost[]) {
     this.galleryList = [];
     let images: GalleryItem[] = [];
-    let alreadyPostedImage = new Set();
-    for (let entry of userSubmission) {
-
-      if (alreadyPostedImage.has(entry.data.url)) {
-        continue;
-      } else {
-        alreadyPostedImage.add(entry.data.url);
-      }
+    for (let entry of filteredUserData) {
 
       let entryDataType: string = entry.data.post_hint;
 
-      if (entry.data.url.includes('onlyfans')) {
+      // TODO : should have a look at those, maybe we can add better filtering
+      // e.g. replace includes with startsWith 
+      if (entry.data.url.includes('onlyfans') || entry.data.thumbnail === 'self') {
         continue;
       }
 
-      if (entry.data.domain === 'i.imgur.com' && entry.data.url.includes('.gifv')) {
+      if (entry.data.domain === 'imgur.com' && entry.data.url.includes('.gifv')) {
         let newUrl = entry.data.url.split('/')[3].split('.')[0];
         images.push(new VideoItem({
-           src: [ {
-            url : `https://i.imgur.com/${newUrl}.mp4`,
-            type: 'video/mp4' } ] as any,
+          src: [{
+            url: `https://i.imgur.com/${newUrl}.mp4`,
+            type: 'video/mp4'
+          }] as any,
           thumb: entry.data.thumbnail,
           poster: entry.data.thumbnail,
           autoplay: true,
@@ -114,8 +140,11 @@ export class UserPageComponent {
       } else if (entryDataType === 'rich:video' && entry.data.url.includes('redgifs')) {
         images.push(new IframeItem({ src: entry.data.url.replace('watch', 'ifr'), thumb: entry.data.thumbnail }));
       }
-
     }
     this.galleryList = images;
-  }
+  };
+
+
+
 }
+

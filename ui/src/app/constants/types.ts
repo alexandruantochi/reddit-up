@@ -1,5 +1,5 @@
-
-export interface UserPost {
+export interface UserPostDetails {
+    domain: string;
     url: string;
     author: string;
     thumbnail: string;
@@ -11,15 +11,16 @@ export enum PostKind {
     t3
 }
 
+export interface UserPost {
+    kind: PostKind;
+    data: UserPostDetails;
+}
+
 export interface UserSubmittedData {
     data: {
         after: string | null;
         before: string | null;
-        children: Array<{
-            kind: PostKind;
-            data: UserPost;
-        }>
-        dist: number;
+        children: UserPost[];
     }
 }
 

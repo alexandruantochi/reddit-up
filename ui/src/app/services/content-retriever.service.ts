@@ -11,8 +11,7 @@ export class ContentRetrieverService {
 
   private readonly redditApiSubmittedUrl: string = '/user/{{username}}/submitted?limit=100&sort=new';
   private readonly redditApiAboutUrl: string = '/user/{{username}}/about';
-
-  private readonly backendUrl: string = "http://localhost:7071";
+  private readonly backendUrl: string = "https://reddit-up-api.azurewebsites.net";
 
   constructor(private http: HttpClient) { };
 
@@ -40,7 +39,7 @@ export class ContentRetrieverService {
     req.toPromise();
   }
 
-  duplicateContentUrls(urls: string[]): Observable<string[]> {
+  getUrlsWithTheSameEtag(urls: string[]): Observable<string[]> {
     const functionUrl = this.backendUrl + '/api/dupe-checker?code=3mYTjiLAPqgOEpX5I0f7tbQ6hjEW4w1VX1zSi2K0rn0lAzFuvpPpSA==';
     return this.http.post<string[]>(functionUrl, { urls });
   }
