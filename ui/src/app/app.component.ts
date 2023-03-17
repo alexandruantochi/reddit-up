@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {filter, map, of, switchMap} from "rxjs";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,7 +9,6 @@ import {filter, map, of, switchMap} from "rxjs";
 })
 export class AppComponent {
   title = 'Up for Reddit';
-  constructor(public router: Router,
-              private route: ActivatedRoute){
+  constructor(public router: Router){
   }
 }

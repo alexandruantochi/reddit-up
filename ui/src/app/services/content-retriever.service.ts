@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Constants } from '../constants/config.prod';
 import { HttpClient } from '@angular/common/http';
 import { UserAboutData, UserSubmittedData } from '../constants/types';
-import {catchError, filter, flatMap, map, Observable, of, switchAll, switchMap, tap, toArray} from 'rxjs';
+import { catchError, flatMap, map, Observable, of, toArray } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -48,11 +48,8 @@ export class ContentRetrieverService {
   public getMultipleUserAboutData(users: string[]): Observable<UserAboutData[]> {
     return of(...users).pipe(
       map(user => this.getUserAboutDetails(user)),
-      catchError((error, caught) => {
-        console.log(error)
-        return of()}),
+      catchError(() => of()),
       flatMap(user => user),
-      tap(user => console.log(user)),
       toArray(),
     );
   }

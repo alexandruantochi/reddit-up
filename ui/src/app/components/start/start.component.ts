@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import {ContentRetrieverService} from "../../services/content-retriever.service";
-import {UserAboutData} from "../../constants/types";
-import {flatMap, map, Observable, of, switchMap, tap, toArray} from "rxjs";
-import {ViewHistoryService} from "../../services/view-history.service";
-import {Title} from "@angular/platform-browser";
+import { ContentRetrieverService } from "../../services/content-retriever.service";
+import { UserAboutData } from "../../constants/types";
+import { ViewHistoryService } from "../../services/view-history.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-start',

@@ -6,7 +6,7 @@ import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from "@angular/common/http";
-import {ViewHistoryService} from "../../services/view-history.service";
+import { ViewHistoryService } from "../../services/view-history.service";
 
 
 @Component({
@@ -17,7 +17,6 @@ import {ViewHistoryService} from "../../services/view-history.service";
 
 export class UserPageComponent {
 
-  public userSubmittedData: UserSubmittedData | undefined;
   public retrievingData: boolean;
   public galleryList: GalleryItem[] = [];
 
