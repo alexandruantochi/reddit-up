@@ -6,6 +6,7 @@ import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from "@angular/common/http";
+import { ViewHistoryService } from "../../services/view-history.service";
 
 
 @Component({
@@ -16,13 +17,13 @@ import { HttpErrorResponse } from "@angular/common/http";
 
 export class UserPageComponent {
 
-  public userSubmittedData: UserSubmittedData | undefined;
   public retrievingData: boolean;
   public galleryList: GalleryItem[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private contentRetriever: ContentRetrieverService,
+    private viewHistoryService: ViewHistoryService,
     private _snackBar: MatSnackBar,
     private titleService: Title
   ) {
@@ -50,11 +51,14 @@ export class UserPageComponent {
           }
           this.displayImages(data.data.children);
 
+          if(currentUsername) {
+            this.viewHistoryService.addUsernameToHistory(currentUsername);
+          }
 
           let userAboutPromise = this.contentRetriever.getUserAboutDetails(currentUsername);
           userAboutPromise.subscribe({
             next: (data: UserAboutData) => {
-              this.titleService.setTitle(`${data.data.subreddit.title} (${data.data.subreddit.display_name_prefixed}) - reddit-up`);
+              this.titleService.setTitle(`${data.data.subreddit.title} (${data.data.subreddit.display_name_prefixed}) - Up for Reddit`);
             }
           });
         },
@@ -115,7 +119,7 @@ export class UserPageComponent {
       let entryDataType: string = entry.data.post_hint;
 
       // TODO : should have a look at those, maybe we can add better filtering
-      // e.g. replace includes with startsWith 
+      // e.g. replace includes with startsWith
       if (entry.data.url.includes('onlyfans') || entry.data.thumbnail === 'self') {
         continue;
       }
