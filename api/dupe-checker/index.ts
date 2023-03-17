@@ -12,7 +12,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     let dupeEtags = new Set();
     let dupeUrls: string[] = [];
     let requests: Promise<void>[] = [];
-    let urlsToCheck: string[] = context.req.body.urls;
+    let urlsToCheck: string[] = context.req.body;
 
     for (let url of urlsToCheck) {
         requests.push(fetch(url, { method: 'HEAD' }).then(
@@ -34,8 +34,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     context.res = {
         status: 200,
-        body: dupeUrls,
-        headers: { "Content-Type": "application/json" }
+        body: dupeUrls
     }
 };
 
