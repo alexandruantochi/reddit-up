@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { Constants } from '../constants/config.prod';
 import { HttpClient } from '@angular/common/http';
 import { UserAboutData, UserSubmittedData } from '../constants/types';
-import { Observable } from 'rxjs';
+import {flatMap, Observable, of, toArray} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContentRetrieverService {
 
-  private readonly redditApiSubmittedUrl: string = '/user/{{username}}/submitted?limit=100&sort=new';
-  private readonly redditApiAboutUrl: string = '/user/{{username}}/about';
+  private readonly redditApiSubmittedUrl: string = '/user/{{username}}/submitted?raw_json=1';
+  private readonly redditApiAboutUrl: string = '/user/{{username}}/about?raw_json=1';
   private readonly backendUrl: string = "https://reddit-up-api.azurewebsites.net";
 
   constructor(private http: HttpClient) { };
@@ -44,4 +44,11 @@ export class ContentRetrieverService {
     return this.http.post<string[]>(functionUrl, { urls });
   }
 
+  public getUserAboutDatafromViewHistory(): Observable<UserAboutData[]> {
+    const userHistory: string[] = JSON.parse(localStorage.getItem("history") || "[]");
+    return of(...userHistory).pipe(
+      flatMap(user => this.getUserAboutDetails(user)),
+      toArray(),
+    );
+  }
 }
