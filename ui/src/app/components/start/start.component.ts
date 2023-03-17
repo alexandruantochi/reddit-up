@@ -23,5 +23,13 @@ export class StartComponent {
     this.contentRetriever.getMultipleUserAboutData(this.viewHistoryService.getUserViewHistory()).subscribe((history) => {
       this.viewHistory = history;
     })
+
+  }
+
+  removeUserFromHistory(username: string) {
+    this.viewHistoryService.removeUserFromHistory(username);
+    this.contentRetriever.getMultipleUserAboutData(this.viewHistoryService.getUserViewHistory()).subscribe((history) => {
+      this.viewHistory = history;
+    })
   }
 }

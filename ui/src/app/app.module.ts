@@ -24,6 +24,7 @@ import { LowerCaseUrlSerializer } from './providers/LowerCaseUrlSerializer';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { StartComponent } from './components/start/start.component';
 import {ViewHistoryService} from "./services/view-history.service";
+import {MatMenuModule} from "@angular/material/menu";
 
 
 @NgModule({
@@ -34,22 +35,23 @@ import {ViewHistoryService} from "./services/view-history.service";
     SearchComponentComponent,
     StartComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatProgressSpinnerModule,
-        MatInputModule,
-        MatIconModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatGridListModule,
-        GalleryModule,
-        MatSnackBarModule,
-        FormsModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatGridListModule,
+    GalleryModule,
+    MatSnackBarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatMenuModule
+  ],
   providers: [ContentRetrieverService,
     ViewHistoryService,
     {

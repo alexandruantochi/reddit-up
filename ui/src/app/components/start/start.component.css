@@ -76,3 +76,9 @@
   margin-right: 0;
   margin-left: 0.25em;
 }
+
+.topActions {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
