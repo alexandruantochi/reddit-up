@@ -18,13 +18,18 @@
         <div class="userCardHeader">
           <img [src]="user.data.subreddit.banner_img"/>
         </div>
-        <div class="userCardIcon">
-          <img [src]="user.data.subreddit.icon_img"/>
+        <div class="userCardMainInfo">
+          <div class="userCardSnoovatar">
+            <img [src]="user.data.icon_img"/>
+          </div>
+          <div class="names">
+            <h2>{{ user.data.subreddit.title || user.data.name}}</h2>
+            <h3>{{ user.data.subreddit.display_name_prefixed }}</h3>
+          </div>
         </div>
-        <div class="names">
-          <h2>{{ user.data.subreddit.title || user.data.name}}</h2>
-          <h3>{{ user.data.subreddit.display_name_prefixed }}</h3>
-        </div>
+        <p class="userCardDescription">
+          {{ user.data.subreddit.public_description }}
+        </p>
         <div class="actions">
           <a mat-button [routerLink]="['/user', user.data.name]">Open<mat-icon>chevron_right</mat-icon></a>
         </div>

@@ -6,11 +6,12 @@
 }
 .userCard {
   width: 400px;
-  height: 300px;
   background-color: #303030;
   overflow: hidden;
   border-radius: 5px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .userCardHeader {
@@ -23,24 +24,29 @@
   width: 100%;
 }
 
-.userCardIcon {
-  width: 100px;
+.userCardSnoovatar {
   height: 100px;
-  position: absolute;
+  position: relative;
   border-radius: 5px;
-  padding: 15px;
-  top: 70px;
-  left: 10px
+  display: inline-block;
+  margin-top: -60px;
 }
 
-.userCardIcon img {
-  width: 100%;
+.userCardSnoovatar img {
+  height: 100%;
 }
 
 .userCard .names {
-  padding-top: 0.5em;
-  padding-left: 140px;
-  position: relative;
+  display: inline-block;
+  margin-left: 1em;
+}
+
+.userCardDescription {
+  padding: 1em;
+}
+
+.userCardMainInfo {
+  padding: 0.5em;
 }
 
 .userCard .names h2, .userCard .names h3 {
@@ -53,11 +59,11 @@
 }
 
 .actions {
+  margin-top: auto;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  position: absolute;
-  bottom: 0;
+  position: relative;
   width: 100%;
   padding: 1em;
   box-sizing: border-box;
