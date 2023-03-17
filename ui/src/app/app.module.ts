@@ -21,6 +21,7 @@ import { SearchComponentComponent } from './components/search-component/search-c
 
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './providers/LowerCaseUrlSerializer';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -30,20 +31,22 @@ import { LowerCaseUrlSerializer } from './providers/LowerCaseUrlSerializer';
     SpinnerComponent,
     SearchComponentComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    MatInputModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatGridListModule,
-    GalleryModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        MatInputModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatGridListModule,
+        GalleryModule,
+        MatSnackBarModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
   providers: [ContentRetrieverService,
     {
       provide: UrlSerializer,
