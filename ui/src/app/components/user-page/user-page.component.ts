@@ -81,49 +81,41 @@ export class UserPageComponent {
     this.galleryList = [];
     let images: GalleryItem[] = [];
     let alreadyPostedImage = new Set();
-    console.log(userSubmission)
-    this.contentRetriever.duplicateContentUrls(userSubmission.map((entry: { data: { thumbnail: any; }; }) => entry.data.thumbnail)).subscribe((urls) => {
-      if(urls) {
-      userSubmission = userSubmission.filter((entry: any) => {
-        return !urls.includes(entry.data.thumbnail)});
+    for (let entry of userSubmission) {
+
+      if (alreadyPostedImage.has(entry.data.url)) {
+        continue;
+      } else {
+        alreadyPostedImage.add(entry.data.url);
       }
 
-      for (let entry of userSubmission) {
+      let entryDataType: string = entry.data.post_hint;
 
-        if (alreadyPostedImage.has(entry.data.url)) {
-          continue;
-        } else {
-          alreadyPostedImage.add(entry.data.url);
-        }
+      if (entry.data.url.includes('onlyfans')) {
+        continue;
+      }
 
-        let entryDataType: string = entry.data.post_hint;
-
-        if (entry.data.url.includes('onlyfans')) {
-          continue;
-        }
-
-        if (entry.data.domain === 'i.imgur.com' && entry.data.url.includes('.gifv')) {
-          let newUrl = entry.data.url.split('/')[3].split('.')[0];
-          images.push(new VideoItem({
-            src: [ {
-              url : `https://i.imgur.com/${newUrl}.mp4`,
-              type: 'video/mp4' } ] as any,
-            thumb: entry.data.thumbnail,
-            poster: entry.data.thumbnail,
-            autoplay: true,
-            controls: true,
-            loop: true
-          }))
-
-        }
-        else if (entryDataType === 'image') {
-          images.push(new ImageItem({ src: entry.data.url, thumb: entry.data.thumbnail }));
-        } else if (entryDataType === 'rich:video' && entry.data.url.includes('redgifs')) {
-          images.push(new IframeItem({ src: entry.data.url.replace('watch', 'ifr'), thumb: entry.data.thumbnail }));
-        }
+      if (entry.data.domain === 'i.imgur.com' && entry.data.url.includes('.gifv')) {
+        let newUrl = entry.data.url.split('/')[3].split('.')[0];
+        images.push(new VideoItem({
+           src: [ {
+            url : `https://i.imgur.com/${newUrl}.mp4`,
+            type: 'video/mp4' } ] as any,
+          thumb: entry.data.thumbnail,
+          poster: entry.data.thumbnail,
+          autoplay: true,
+          controls: true,
+          loop: true
+        }))
 
       }
-      this.galleryList = images;
-    });
+      else if (entryDataType === 'image') {
+        images.push(new ImageItem({ src: entry.data.url, thumb: entry.data.thumbnail }));
+      } else if (entryDataType === 'rich:video' && entry.data.url.includes('redgifs')) {
+        images.push(new IframeItem({ src: entry.data.url.replace('watch', 'ifr'), thumb: entry.data.thumbnail }));
+      }
+
+    }
+    this.galleryList = images;
   }
 }
