@@ -18,11 +18,13 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         requests.push(fetch(url, { method: 'HEAD' }).then(
             data => {
                 let etag = data.headers.get("etag");
-                if (dupeEtags.has(etag)) {
-                    dupeUrls.push(url);
-                } else {
-                    dupeEtags.add(etag);
-                }
+                if(etag){
+                    if (dupeEtags.has(etag)) {
+                        dupeUrls.push(url);
+                    } else {
+                        dupeEtags.add(etag);
+                    }
+                };
             },
             err => {
                 console.error(err);
