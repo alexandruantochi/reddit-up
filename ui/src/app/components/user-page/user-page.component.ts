@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ContentRetrieverService } from 'src/app/services/content-retriever.service';
-import { UserAboutData, UserSubmittedData } from 'src/app/constants/types';
+import { UserAboutData, UserSubmittedData, UserPost } from 'src/app/constants/types';
 import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
