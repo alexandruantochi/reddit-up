@@ -114,7 +114,9 @@ export class UserPageComponent {
 
       let entryDataType: string = entry.data.post_hint;
 
-      if (entry.data.url.startsWith('onlyfans') || entry.data.thumbnail === 'self') {
+      // TODO : should have a look at those, maybe we can add better filtering
+      // e.g. replace includes with startsWith 
+      if (entry.data.url.includes('onlyfans') || entry.data.thumbnail === 'self') {
         continue;
       }
 
