@@ -22,6 +22,7 @@ import { SearchComponentComponent } from './components/search-component/search-c
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './providers/LowerCaseUrlSerializer';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { StartComponent } from './components/start/start.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     AppComponent,
     UserPageComponent,
     SpinnerComponent,
-    SearchComponentComponent
+    SearchComponentComponent,
+    StartComponent
   ],
     imports: [
         BrowserModule,
