@@ -23,6 +23,7 @@ import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './providers/LowerCaseUrlSerializer';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { StartComponent } from './components/start/start.component';
+import {ViewHistoryService} from "./services/view-history.service";
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { StartComponent } from './components/start/start.component';
         ReactiveFormsModule
     ],
   providers: [ContentRetrieverService,
+    ViewHistoryService,
     {
       provide: UrlSerializer,
       useClass: LowerCaseUrlSerializer

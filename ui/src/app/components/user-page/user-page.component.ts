@@ -6,6 +6,7 @@ import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from "@angular/common/http";
+import {ViewHistoryService} from "../../services/view-history.service";
 
 
 @Component({
@@ -23,6 +24,7 @@ export class UserPageComponent {
   constructor(
     private route: ActivatedRoute,
     private contentRetriever: ContentRetrieverService,
+    private viewHistoryService: ViewHistoryService,
     private _snackBar: MatSnackBar,
     private titleService: Title
   ) {
@@ -50,6 +52,9 @@ export class UserPageComponent {
           }
           this.displayImages(data.data.children);
 
+          if(currentUsername) {
+            this.viewHistoryService.addUsernameToHistory(currentUsername);
+          }
 
           let userAboutPromise = this.contentRetriever.getUserAboutDetails(currentUsername);
           userAboutPromise.subscribe({

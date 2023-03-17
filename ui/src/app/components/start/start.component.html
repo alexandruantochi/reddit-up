@@ -22,8 +22,11 @@
           <img [src]="user.data.subreddit.icon_img"/>
         </div>
         <div class="names">
-          <h2>{{ user.data.subreddit.title }}</h2>
+          <h2>{{ user.data.subreddit.title || user.data.name}}</h2>
           <h3>{{ user.data.subreddit.display_name_prefixed }}</h3>
+        </div>
+        <div class="actions">
+          <a mat-button [routerLink]="['/user', user.data.name]">Open<mat-icon>chevron_right</mat-icon></a>
         </div>
       </div>
     </div>

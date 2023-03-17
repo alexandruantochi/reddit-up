@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Constants } from '../constants/config.prod';
 import { HttpClient } from '@angular/common/http';
 import { UserAboutData, UserSubmittedData } from '../constants/types';
-import {flatMap, Observable, of, toArray} from 'rxjs';
+import {catchError, filter, flatMap, map, Observable, of, switchAll, switchMap, tap, toArray} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,9 @@ export class ContentRetrieverService {
   private readonly redditApiAboutUrl: string = '/user/{{username}}/about?raw_json=1';
   private readonly backendUrl: string = "https://reddit-up-api.azurewebsites.net";
 
-  constructor(private http: HttpClient) { };
+  constructor(private http: HttpClient) {
+    this.getUserAboutDetails("nosdasdatreal").subscribe(u => console.log(u), r => console.log(r));
+  };
 
   getUserSubmittedData(username: string): Observable<UserSubmittedData> {
     let queryParams = {
@@ -26,7 +28,7 @@ export class ContentRetrieverService {
 
   getUserAboutDetails(username: string): Observable<UserAboutData> {
     var contentUrl = Constants.redditApiBaseUrl + this.redditApiAboutUrl.replace('{{username}}', username);
-    return this.http.get<UserAboutData>(contentUrl);
+    return this.http.get<UserAboutData>(contentUrl).pipe(catchError(() => of()));
   }
 
 
@@ -44,10 +46,14 @@ export class ContentRetrieverService {
     return this.http.post<string[]>(functionUrl, { urls });
   }
 
-  public getUserAboutDatafromViewHistory(): Observable<UserAboutData[]> {
-    const userHistory: string[] = JSON.parse(localStorage.getItem("history") || "[]");
-    return of(...userHistory).pipe(
-      flatMap(user => this.getUserAboutDetails(user)),
+  public getMultipleUserAboutData(users: string[]): Observable<UserAboutData[]> {
+    return of(...users).pipe(
+      map(user => this.getUserAboutDetails(user)),
+      catchError((error, caught) => {
+        console.log(error)
+        return of()}),
+      flatMap(user => user),
+      tap(user => console.log(user)),
       toArray(),
     );
   }
