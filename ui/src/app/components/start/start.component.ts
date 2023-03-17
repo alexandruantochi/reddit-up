@@ -3,6 +3,7 @@ import {ContentRetrieverService} from "../../services/content-retriever.service"
 import {UserAboutData} from "../../constants/types";
 import {flatMap, map, Observable, of, switchMap, tap, toArray} from "rxjs";
 import {ViewHistoryService} from "../../services/view-history.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-start',
@@ -14,7 +15,10 @@ export class StartComponent {
   viewHistory: UserAboutData[] = [];
   constructor(
     private contentRetriever: ContentRetrieverService,
-    private viewHistoryService: ViewHistoryService) {
+    private viewHistoryService: ViewHistoryService,
+    private titleService: Title) {
+
+    this.titleService.setTitle(`Up for Reddit`);
 
     this.contentRetriever.getMultipleUserAboutData(this.viewHistoryService.getUserViewHistory()).subscribe((history) => {
       this.viewHistory = history;

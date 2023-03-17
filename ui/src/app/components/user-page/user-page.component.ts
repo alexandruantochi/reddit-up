@@ -59,7 +59,7 @@ export class UserPageComponent {
           let userAboutPromise = this.contentRetriever.getUserAboutDetails(currentUsername);
           userAboutPromise.subscribe({
             next: (data: UserAboutData) => {
-              this.titleService.setTitle(`${data.data.subreddit.title} (${data.data.subreddit.display_name_prefixed}) - reddit-up`);
+              this.titleService.setTitle(`${data.data.subreddit.title} (${data.data.subreddit.display_name_prefixed}) - Up for Reddit`);
             }
           });
         },
@@ -120,7 +120,7 @@ export class UserPageComponent {
       let entryDataType: string = entry.data.post_hint;
 
       // TODO : should have a look at those, maybe we can add better filtering
-      // e.g. replace includes with startsWith 
+      // e.g. replace includes with startsWith
       if (entry.data.url.includes('onlyfans') || entry.data.thumbnail === 'self') {
         continue;
       }

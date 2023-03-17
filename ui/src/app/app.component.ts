@@ -9,7 +9,7 @@ import {filter, map, of, switchMap} from "rxjs";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'reddit-up';
+  title = 'Up for Reddit';
   constructor(public router: Router,
               private route: ActivatedRoute){
   }
