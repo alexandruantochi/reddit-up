@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Up for Reddit';
+  title = 'reddit-up';
   constructor(public router: Router){
+
   }
 }
