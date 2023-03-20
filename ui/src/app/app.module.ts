@@ -22,6 +22,9 @@ import { SearchComponentComponent } from './components/search-component/search-c
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './providers/LowerCaseUrlSerializer';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { StartComponent } from './components/start/start.component';
+import {ViewHistoryService} from "./services/view-history.service";
+import {MatMenuModule} from "@angular/material/menu";
 
 
 @NgModule({
@@ -29,25 +32,28 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     AppComponent,
     UserPageComponent,
     SpinnerComponent,
-    SearchComponentComponent
+    SearchComponentComponent,
+    StartComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatProgressSpinnerModule,
-        MatInputModule,
-        MatIconModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatGridListModule,
-        GalleryModule,
-        MatSnackBarModule,
-        FormsModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatGridListModule,
+    GalleryModule,
+    MatSnackBarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatMenuModule
+  ],
   providers: [ContentRetrieverService,
+    ViewHistoryService,
     {
       provide: UrlSerializer,
       useClass: LowerCaseUrlSerializer
