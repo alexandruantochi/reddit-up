@@ -6,7 +6,7 @@ on:
     paths: [ "ui/**", ".github/workflows/azure-staticwebapp.yml" ]
   pull_request:
     types: [opened, synchronize, reopened, closed]
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
     paths: [ "ui/**", ".github/workflows/azure-staticwebapp.yml" ]
 
 env:
