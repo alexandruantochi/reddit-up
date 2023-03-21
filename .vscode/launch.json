@@ -14,7 +14,12 @@
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
-      "url": "http://localhost:4200/"
+      "url": "http://localhost:4200/",
+      "webRoot": "${workspaceFolder}/ui",
+      "outFiles": [
+        "${workspaceFolder}/ui/**/*.js",
+        "!**/node_modules/**"
+      ]
     },
     /* no tests for now :(
     {
@@ -28,7 +33,7 @@
   ],
   "compounds": [
     {
-      "name": "UI and API",
+      "name": "UI + API",
       "configurations": [
         "UI",
         "API"
