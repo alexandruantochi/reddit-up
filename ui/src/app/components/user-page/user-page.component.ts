@@ -100,7 +100,6 @@ export class UserPageComponent {
     this.contentRetriever.getUrlsWithTheSameEtag(userSubmittedUrlsToCheck).subscribe({
       next: (sameImageUrls) => {
         let sameImageUrlsSet = new Set(sameImageUrls);
-        console.log(sameImageUrls);
         filteredUserData = filteredUserData.filter(x => {
           return !sameImageUrlsSet.has(x.data.url);
         });
@@ -124,7 +123,7 @@ export class UserPageComponent {
         continue;
       }
 
-      if (entry.data.domain === 'imgur.com' && entry.data.url.includes('.gifv')) {
+      if (entry.data.domain.endsWith('imgur.com') && entry.data.url.endsWith('.gifv')) {
         let newUrl = entry.data.url.split('/')[3].split('.')[0];
         images.push(new VideoItem({
           src: [{
