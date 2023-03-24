@@ -7,9 +7,11 @@ on:
   push:
     branches:
       - main
+      - dev
     paths:
       - api/**
-  workflow_dispatch:
+      - .github/workflows/api-deployment.yml
+      
 env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: 'api' 
   NODE_VERSION: '18.x' 
@@ -42,4 +44,4 @@ jobs:
           app-name: 'reddit-up-api'
           slot-name: 'production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_aed0a9e305c644dc9bd8ba7b4eb6b3c3 }}
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
