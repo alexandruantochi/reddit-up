@@ -11,28 +11,23 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     let dupeEtags = new Set();
     let dupeUrls: string[] = [];
-    let requests: Promise<void>[] = [];
     let urlsToCheck: string[] = context.req.body.urls;
 
-    for (let url of urlsToCheck) {
-        requests.push(fetch(url, { method: 'HEAD' }).then(
-            data => {
-                let etag = data.headers.get("etag");
-                if(etag){
-                    if (dupeEtags.has(etag)) {
-                        dupeUrls.push(url);
-                    } else {
-                        dupeEtags.add(etag);
-                    }
-                };
-            },
-            err => {
-                console.error(err);
-            }
-        ));
-    }
-
-    await Promise.all(requests);
+    await Promise.all(urlsToCheck.map(async (url) => {
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            const etag = response.headers.get("etag");
+            if (etag) {
+                if (dupeEtags.has(etag)) {
+                    dupeUrls.push(url);
+                } else {
+                    dupeEtags.add(etag);
+                }
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    }));
 
     context.res = {
         status: 200,
