@@ -13,6 +13,7 @@ jobs:
   tagging_job:
     runs-on: ubuntu-latest
     name: Tagging Job
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -26,6 +27,28 @@ jobs:
       - uses: butlerlogic/action-autotag@stable
         with:
           tag_prefix: "api-v"
+          root: "/api"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  tagging_dev_job:
+    runs-on: ubuntu-latest
+    name: Tagging Job
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - uses: butlerlogic/action-autotag@stable
+        with:
+          tag_prefix: "ui-v"
+          tag_suffix: "-dev"
+          root: "/ui"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: butlerlogic/action-autotag@stable
+        with:
+          tag_prefix: "api-v"
+          tag_suffix: "-dev"
           root: "/api"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
