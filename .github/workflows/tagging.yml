@@ -11,7 +11,9 @@ permissions:
 
 jobs:
   build_and_deploy_job:
-    - steps:
+    runs-on: ubuntu-latest
+    name: Tagging Job
+    steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
