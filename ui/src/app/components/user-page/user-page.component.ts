@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import { ContentRetrieverService } from 'src/app/services/content-retriever.service';
 import { UserAboutData, UserSubmittedData, UserPost } from 'src/app/constants/types';
 import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
@@ -15,9 +15,10 @@ import { ViewHistoryService } from "../../services/view-history.service";
   styleUrls: ['./user-page.component.css']
 })
 
-export class UserPageComponent {
+export class UserPageComponent implements OnInit {
 
   public retrievingData: boolean;
+  public notFound: boolean = false;
   public galleryList: GalleryItem[] = [];
 
   constructor(
@@ -64,14 +65,23 @@ export class UserPageComponent {
         },
         error: (e: HttpErrorResponse) => {
           this.retrievingData = false;
-           if (e.status === 777) {
+
+          switch(e.status) {
+            case 777:
               this._snackBar.open(`Sorry, Reddit is dead. ☠️`, "", {
                 duration: 3000
               });
-          } else {
-            this._snackBar.open(`An unexpected error occurred.`, "", {
-              duration: 3000
-            });
+              break;
+            case 404:
+              this._snackBar.open(`User doesn't exist.`, "", {
+                duration: 3000
+              });
+              this.notFound = true;
+              break;
+            default:
+              this._snackBar.open(`An unexpected error occurred.`, "", {
+                duration: 3000
+              });
           }
         }
       }
