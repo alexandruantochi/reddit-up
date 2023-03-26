@@ -32,7 +32,7 @@ jobs:
       - uses: butlerlogic/action-autotag@stable
         with:
           tag_prefix: "ui-v"
-          package_root: "/ui"
+          root: "/ui"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       - name: Add latest build date

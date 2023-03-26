@@ -24,7 +24,7 @@ jobs:
       - uses: butlerlogic/action-autotag@stable
         with:
           tag_prefix: "api-v"
-          package_root: "/api"
+          root: "/api"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       - name: Setup Node ${{ env.NODE_VERSION }} Environment
