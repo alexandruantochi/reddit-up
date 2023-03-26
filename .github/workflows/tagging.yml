@@ -1,0 +1,28 @@
+name: Tag branch with version
+
+on:
+  push
+  pull_request
+
+env:
+
+permissions:
+  contents: write
+
+jobs:
+  build_and_deploy_job:
+  - uses: actions/checkout@v3
+    with:
+      submodules: true
+  - uses: butlerlogic/action-autotag@stable
+    with:
+      tag_prefix: "ui-v"
+      root: "/ui"
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  - uses: butlerlogic/action-autotag@stable
+    with:
+      tag_prefix: "api-v"
+      root: "/api"
+    env:
+      GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

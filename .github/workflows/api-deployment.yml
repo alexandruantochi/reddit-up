@@ -21,12 +21,6 @@ jobs:
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v2
-      - uses: butlerlogic/action-autotag@stable
-        with:
-          tag_prefix: "api-v"
-          root: "/api"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       - name: Setup Node ${{ env.NODE_VERSION }} Environment
         uses: actions/setup-node@v1
         with:
