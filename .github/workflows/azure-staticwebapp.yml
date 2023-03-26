@@ -29,11 +29,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      - uses: Klemensas/action-autotag@stable
+      - uses: butlerlogic/action-autotag@stable
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_prefix: "ui-v"
           package_root: "/ui"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       - name: Add latest build date
         run: |
           BUILD_NUMBER=$(date '+%Y-%m-%d %H:%M:%S')
