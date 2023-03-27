@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ContentRetrieverService } from 'src/app/services/content-retriever.service';
 import { UserAboutData, UserSubmittedData, UserPost } from 'src/app/constants/types';
 import { GalleryItem, IframeItem, ImageItem, VideoItem } from 'ng-gallery';
@@ -44,50 +44,34 @@ export class UserPageComponent implements OnInit {
         next: (data: UserSubmittedData) => {
           this.retrievingData = false;
 
-          if (data.data.children.length === 0) {
-            this._snackBar.open(`Could not find username "${currentUsername}"`, "", {
+          this.setPageTitle(currentUsername);
+          this.viewHistoryService.addUsernameToHistory(currentUsername);
+
+          if (!data.data.children.length) {
+            this._snackBar.open(`${currentUsername} has no posts :(`, "", {
               duration: 3000
             });
-            console.log(`Could not find username "${currentUsername}"`);
+          } else {
+            this.displayImages(data.data.children);
           }
-          this.displayImages(data.data.children);
-
-          if(currentUsername) {
-            this.viewHistoryService.addUsernameToHistory(currentUsername);
-          }
-
-          let userAboutPromise = this.contentRetriever.getUserAboutDetails(currentUsername);
-          userAboutPromise.subscribe({
-            next: (data: UserAboutData) => {
-              this.titleService.setTitle(`${data.data.subreddit.title} (${data.data.subreddit.display_name_prefixed}) - Up for Reddit`);
-            }
-          });
         },
         error: (e: HttpErrorResponse) => {
           this.retrievingData = false;
 
-          switch(e.status) {
+          switch (e.status) {
             case 777:
-              this._snackBar.open(`Sorry, Reddit is dead. ☠️`, "", {
-                duration: 3000
-              });
+              this.defaultSnackbar(`Sorry, Reddit is dead. ☠️`);
               break;
             case 404:
-              this._snackBar.open(`User doesn't exist.`, "", {
-                duration: 3000
-              });
+              this.defaultSnackbar(`Can't find ${currentUsername}.`);
               this.notFound = true;
               break;
             default:
-              this._snackBar.open(`An unexpected error occurred.`, "", {
-                duration: 3000
-              });
+              this.defaultSnackbar(`An unexpected error has occurred: HTTP ${e.status}`);
+              break;
           }
         }
-      }
-      );
-
-
+      });
     });
   }
 
@@ -106,7 +90,7 @@ export class UserPageComponent implements OnInit {
 
   displayImages(rawUserData: UserPost[]): void {
     let filteredUserData = this.removeSameUrlsFromUserData(rawUserData);
-    const userSubmittedUrlsToCheck = filteredUserData.map(x => x.data.url).filter( x => x.startsWith('https://i.redd.it'));
+    const userSubmittedUrlsToCheck = filteredUserData.map(x => x.data.url).filter(x => x.startsWith('https://i.redd.it'));
     this.contentRetriever.getUrlsWithTheSameEtag(userSubmittedUrlsToCheck).subscribe({
       next: (sameImageUrls) => {
         let sameImageUrlsSet = new Set(sameImageUrls);
@@ -154,10 +138,29 @@ export class UserPageComponent implements OnInit {
         images.push(new IframeItem({ src: entry.data.url.replace('watch', 'ifr'), thumb: entry.data.thumbnail }));
       }
     }
-    this.galleryList = images;
+    
+    if (images.length) {
+      this.galleryList = images;
+    } else {
+      this.defaultSnackbar("Nothing to display for this user :(");
+    }
+
   };
 
+  setPageTitle(currentUsername: string): void {
+    let userAboutPromise = this.contentRetriever.getUserAboutDetails(currentUsername);
+    userAboutPromise.subscribe({
+      next: (data: UserAboutData) => {
+        this.titleService.setTitle(`${data.data.subreddit.title} (${data.data.subreddit.display_name_prefixed}) - Up for Reddit`);
+      }
+    });
+  }
 
+  defaultSnackbar(message: string): void {
+    this._snackBar.open(message, "", {
+      duration: 3000
+    });
+  };
 
 }
 
