@@ -1,5 +1,9 @@
 Last build: {{last_built}}
 
+2023-03-30:
+* fixed a bug where imgur links would not get dupe checked
+(unfortunatelly some users post the same pic on both reddit and imgur, in this case dupe checking can not be performed)
+
 2023-03-17:
 * added extra dupe filtering, there should not be any more duplicate pictures
 * imporved UI and added reactive search
