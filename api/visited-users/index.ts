@@ -3,7 +3,7 @@ import { Container, CosmosClient, ExistingKeyOperation, ItemResponse } from "@az
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
 
-  const username = req.query.username;
+  const username = req.query.username.toLowerCase();
 
   if (!username) {
     context.res = {
