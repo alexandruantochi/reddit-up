@@ -59,13 +59,16 @@ export class UserPageComponent implements OnInit {
           this.retrievingData = false;
 
           switch (e.status) {
-            case 777:
-              this.defaultSnackbar(`Sorry, Reddit is dead. ☠️`);
+            case 403:
+              this.defaultSnackbar(`${currentUsername} was suspended/deleted.`);
               break;
             case 404:
               this.defaultSnackbar(`Can't find ${currentUsername}.`);
               this.notFound = true;
               break;
+              case 777:
+                this.defaultSnackbar(`Sorry, Reddit is dead. ☠️`);
+                break;
             default:
               this.defaultSnackbar(`An unexpected error has occurred: HTTP ${e.status}`);
               break;
