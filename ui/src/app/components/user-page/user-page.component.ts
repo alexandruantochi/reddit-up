@@ -34,7 +34,7 @@ export class UserPageComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       let currentUsername = (params.get('username') || "").replaceAll(' ', '').toLowerCase();
-      if (currentUsername === "") {
+      if (!currentUsername) {
         return;
       }
       this.retrievingData = true;
@@ -75,7 +75,6 @@ export class UserPageComponent implements OnInit {
     });
   }
 
-
   removeSameUrlsFromUserData(rawUserData: UserPost[]): UserPost[] {
     let alreadySeenUrl = new Set();
     return rawUserData.filter(post => {
@@ -90,7 +89,7 @@ export class UserPageComponent implements OnInit {
 
   displayImages(rawUserData: UserPost[]): void {
     let filteredUserData = this.removeSameUrlsFromUserData(rawUserData);
-    const userSubmittedUrlsToCheck = filteredUserData.map(x => x.data.url).filter(x => x.startsWith('https://i.redd.it'));
+    const userSubmittedUrlsToCheck = filteredUserData.map(x => x.data.url).filter(url => { return !url.includes('redgifs.com') });
     this.contentRetriever.getUrlsWithTheSameEtag(userSubmittedUrlsToCheck).subscribe({
       next: (sameImageUrls) => {
         let sameImageUrlsSet = new Set(sameImageUrls);
@@ -138,7 +137,7 @@ export class UserPageComponent implements OnInit {
         images.push(new IframeItem({ src: entry.data.url.replace('watch', 'ifr'), thumb: entry.data.thumbnail }));
       }
     }
-    
+
     if (images.length) {
       this.galleryList = images;
     } else {
