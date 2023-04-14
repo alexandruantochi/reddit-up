@@ -135,6 +135,11 @@ export class UserPageComponent implements OnInit {
           controls: true,
           loop: true
         }))
+      } else if (userPostType === 'gallery') {
+        const galleryItemIds = entry.data.gallery_data?.items.map(item => item.media_id) || [];
+        galleryItemIds.forEach( itemId => {
+          this.galleryList.push(new ImageItem({ src: `https://i.redd.it/${itemId}.jpg`, thumb: `https://i.redd.it/${itemId}.jpg` }));
+        })
       }
       else if (userPostType === 'image') {
         this.galleryList.push(new ImageItem({ src: entry.data.url, thumb: entry.data.thumbnail }));
@@ -145,7 +150,7 @@ export class UserPageComponent implements OnInit {
 
     if (!this.galleryList.length) {
       this.defaultSnackbar("Nothing to display for this user :(");
-    } 
+    }
   };
 
   getEntryType(entry: UserPost): userPostType {
@@ -162,7 +167,7 @@ export class UserPageComponent implements OnInit {
     if (entryDataType === 'rich:video' && entry.data.url.includes('redgifs')) {
       return 'redgif';
     };
-    if (entry.data.is_gallery){
+    if (entry.data.is_gallery) {
       return 'gallery';
     }
     return;

@@ -1,5 +1,8 @@
 Last build: {{last_built}}
 
+3023-04-14:
+* galleries are now supported
+
 2023-03-30:
 * fixed a bug where imgur links would not get dupe checked
 (unfortunatelly some users post the same pic on both reddit and imgur, in this case dupe checking can not be performed)
